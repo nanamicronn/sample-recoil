@@ -5,3 +5,5 @@ export type TodoListItem = {
   text: string
   isComplete: boolean
 }
+
+export type TodoFilterStatus = 'Show All' | 'Show Completed' | 'Show Uncompleted'

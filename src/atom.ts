@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { TodoList } from '@/types'
+import { TodoFilterStatus, TodoList } from '@/types'
 
 export const textState = atom({
   key: 'textState',
@@ -9,4 +9,9 @@ export const textState = atom({
 export const todoListState = atom<TodoList>({
   key: 'TodoList',
   default: [],
+})
+
+export const todoListFilterState = atom<TodoFilterStatus>({
+  key: 'TodoListFilter',
+  default: 'Show All',
 })

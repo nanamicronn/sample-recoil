@@ -1,19 +1,40 @@
 import { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { todoListState } from '@/atom'
-import { TodoList, TodoListItem } from '@/types'
+import { todoListFilterState, todoListState } from '@/atom'
+import { filteredTodoListState } from '@/selector'
+import { TodoFilterStatus, TodoList, TodoListItem } from '@/types'
 
 const TodoList: NextPage = () => {
   console.log('TodoList')
-  const todoList = useRecoilValue(todoListState)
+  const todoList = useRecoilValue(filteredTodoListState)
 
   return (
     <>
+      <TodoListFilters />
       <TodoItemCreator />
       {todoList.map((todoItem) => (
         <TodoItem key={todoItem.id} item={todoItem} />
       ))}
+    </>
+  )
+}
+
+const TodoListFilters = () => {
+  const [filter, setFilter] = useRecoilState(todoListFilterState)
+  const updateFilter = ({
+    target: { value },
+  }: ChangeEvent<{ value: TodoFilterStatus } & HTMLSelectElement>) => {
+    setFilter(value)
+  }
+  return (
+    <>
+      Filter:
+      <select value={filter} onChange={updateFilter}>
+        <option value='Show All'>All</option>
+        <option value='Show Completed'>Completed</option>
+        <option value='Show Uncompleted'>Uncompleted</option>
+      </select>
     </>
   )
 }
